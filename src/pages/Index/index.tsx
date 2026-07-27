@@ -139,8 +139,9 @@ function Rig(props: ThreeElements["group"]) {
   return <group ref={ref} {...props} />;
 }
 
-function Carousel({ radius = 1.4, count = 8 }) {
+function Carousel({ radius = 1.4, count = 10 }) {
   const navigator = useNavigate();
+  const routes = ["/demo0", "/demo1", "/demo2", "/demo3", "/demo4"];
 
   return Array.from({ length: count }, (_, i) => (
     <Card
@@ -154,7 +155,7 @@ function Carousel({ radius = 1.4, count = 8 }) {
       rotation={[0, Math.PI + (i / count) * Math.PI * 2, 0]}
       onClick={(e) => {
         e.stopPropagation();
-        navigator(["/demo0", "/demo1", "/demo2", "/demo3"][i % 4]);
+        navigator(routes[i % routes.length]);
       }}
     />
   ));
