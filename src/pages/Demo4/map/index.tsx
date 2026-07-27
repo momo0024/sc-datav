@@ -12,8 +12,8 @@ import type { CityGeoJSON } from "@/types/map";
 import parkMapData from "@/assets/park_areas.json";
 import parkOutlineData from "@/assets/park_outline.json";
 
-const mapData = parkMapData as CityGeoJSON,
-  outlineData = parkOutlineData as CityGeoJSON;
+const mapData = parkMapData as unknown as CityGeoJSON,
+  outlineData = parkOutlineData as unknown as CityGeoJSON;
 
 const CanvasWrapper = styled.div`
   position: absolute;
