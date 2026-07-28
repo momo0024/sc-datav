@@ -12,7 +12,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PARK_SHP = ROOT / "public/geo/map/园区/Export_Output.shp"
 EXTRA_SHP = ROOT / "public/geo/map/补充面(1)/补充面/Export_Output_2.shp"
 OUT_AREAS = ROOT / "src/assets/park_areas.json"
-OUT_PUBLIC = ROOT / "public/geo/park_areas_gcj02.json"
 # 外轮廓沿用已有精细边界 park_outline.json，本脚本只更新分区面
 
 # CGCS2000 3-degree GK Zone 38 (false easting 38500000) -> WGS84 lon/lat
@@ -267,11 +266,6 @@ def main() -> None:
         json.dumps(areas, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
-    OUT_PUBLIC.parent.mkdir(parents=True, exist_ok=True)
-    OUT_PUBLIC.write_text(
-        json.dumps(areas, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
-    )
 
     names = [f["properties"]["name"] for f in features]
     bbox = bbox_of_features(features)
@@ -279,7 +273,6 @@ def main() -> None:
     print("names:", names)
     print("bbox(gcj02):", bbox)
     print("wrote:", OUT_AREAS)
-    print("wrote:", OUT_PUBLIC)
 
 
 if __name__ == "__main__":
