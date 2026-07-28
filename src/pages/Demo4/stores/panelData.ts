@@ -44,17 +44,25 @@ export const usePanelDataStore = create<PanelDataStore>((set, get) => ({
     if (get().loading || get().loaded) return;
     set({ loading: true });
     try {
-      const results = await Promise.allSettled([
-        fetchCompanies(1, 1000),
-        fetchParkList(),
-        fetchParkChain(),
-        fetchCompanyTypeInfo(),
-        fetchAboveScale(),
-      ]);
+      const [companySettled, parkSettled, chainSettled, typeSettled, aboveSettled] =
+        await Promise.allSettled([
+          fetchCompanies(1, 1000),
+          fetchParkList(),
+          fetchParkChain(),
+          fetchCompanyTypeInfo(),
+          fetchAboveScale(),
+        ]);
 
-      const [companyRes, parkRes, chainRes, typeRes, aboveRes] = results.map(
-        (r) => (r.status === "fulfilled" ? r.value : null)
-      );
+      const companyRes =
+        companySettled.status === "fulfilled" ? companySettled.value : null;
+      const parkRes =
+        parkSettled.status === "fulfilled" ? parkSettled.value : null;
+      const chainRes =
+        chainSettled.status === "fulfilled" ? chainSettled.value : null;
+      const typeRes =
+        typeSettled.status === "fulfilled" ? typeSettled.value : null;
+      const aboveRes =
+        aboveSettled.status === "fulfilled" ? aboveSettled.value : null;
 
       const list =
         companyRes?.code === 0 && Array.isArray(companyRes.data?.list)
