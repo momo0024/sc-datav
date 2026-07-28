@@ -69,7 +69,7 @@ export interface ConeProps {
 function Cone(props: ConeProps) {
   const { position } = props;
   const ref = useRef<Mesh>(null!);
-  let dirRef = useRef<1 | -1>(1);
+  const dirRef = useRef<1 | -1>(1);
 
   useFrame((_, delta) => {
     if (ref.current.position.z >= 1) {

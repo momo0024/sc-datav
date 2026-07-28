@@ -22,12 +22,8 @@ const Rank = styled.span<{ $top?: boolean }>`
 `;
 
 const Name = styled.span`
-  display: block;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   color: rgba(244, 248, 255, 0.92);
+  white-space: nowrap;
 `;
 
 const Count = styled.span`
@@ -88,6 +84,7 @@ export default function Chart2() {
   return (
     <SeamVirtualScroll
       rowHeight={44}
+      speed={2200}
       styles={{
         header: {
           color: "rgba(189, 207, 255, 0.7)",
@@ -102,7 +99,6 @@ export default function Chart2() {
           title: "园区名称",
           dataIndex: "value2",
           align: "left",
-          noScroll: true,
           flex: 2.2,
         },
         {

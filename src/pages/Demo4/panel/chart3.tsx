@@ -30,11 +30,11 @@ const Wrapper = styled.div`
 
 const Summary = styled.div`
   align-self: flex-end;
-  padding: 2px 10px;
+  padding: 3px 12px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.04em;
-  color: rgba(189, 207, 255, 0.85);
+  color: rgba(189, 207, 255, 0.9);
   background: rgba(48, 97, 219, 0.28);
   border: 1px solid rgba(141, 178, 255, 0.22);
 `;
@@ -48,7 +48,7 @@ const List = styled.ul`
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -61,17 +61,17 @@ const List = styled.ul`
 
 const Row = styled.li`
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) 44px;
+  grid-template-columns: 88px minmax(0, 1fr) 52px;
   align-items: center;
-  gap: 8px;
-  min-height: 22px;
+  gap: 10px;
+  min-height: 26px;
 `;
 
 const Name = styled.span`
-  color: rgba(232, 239, 255, 0.92);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3;
+  color: rgba(232, 239, 255, 0.95);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -79,7 +79,7 @@ const Name = styled.span`
 
 const BarWrap = styled.div`
   position: relative;
-  height: 18px;
+  height: 20px;
   background: rgba(148, 163, 184, 0.08);
   border: 1px solid rgba(148, 163, 184, 0.1);
   border-radius: 4px;
@@ -90,7 +90,7 @@ const Bar = styled.div<{ $percent: number; $color: string; $top: boolean }>`
   position: absolute;
   top: 50%;
   left: 2px;
-  height: 8px;
+  height: 9px;
   width: ${({ $percent }) => `${Math.max(2, Math.min(100, $percent))}%`};
   max-width: calc(100% - 4px);
   transform: translateY(-50%);
@@ -107,18 +107,19 @@ const Percent = styled.span<{ $percent: number }>`
   position: absolute;
   top: 50%;
   left: ${({ $percent }) =>
-    `min(calc(${Math.max(2, Math.min(100, $percent))}% + 4px), calc(100% - 36px))`};
+    `min(calc(${Math.max(2, Math.min(100, $percent))}% + 4px), calc(100% - 42px))`};
   transform: translateY(-50%);
-  color: #a8b9cc;
-  font-size: 10px;
+  color: #c5d4ea;
+  font-size: 12px;
   white-space: nowrap;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 `;
 
 const Count = styled.span`
-  color: rgba(232, 239, 255, 0.9);
-  font-size: 11px;
+  color: rgba(232, 239, 255, 0.95);
+  font-size: 14px;
+  font-weight: 600;
   text-align: right;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;

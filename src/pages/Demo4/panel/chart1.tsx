@@ -69,11 +69,9 @@ export default function Chart1() {
             fontSize: 12,
           },
           axisPointer: {
-            type: "line",
-            lineStyle: {
-              width: 1,
-              type: "dotted",
-              color: "#4d7fff",
+            type: "shadow",
+            shadowStyle: {
+              color: "rgba(77, 127, 255, 0.18)",
             },
           },
           formatter: (params: unknown) => {

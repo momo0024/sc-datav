@@ -46,7 +46,7 @@ export async function apiGet<T>(
 
   const res = (await response.json()) as ApiResponse<T>;
   if (res?.code !== undefined && res.code !== 0) {
-    console.error(`[API Error] ${res.msg || res.message || "请求失败"}`);
+    console.warn(`[API] ${res.msg || res.message || "请求失败"}`);
   }
   return res;
 }

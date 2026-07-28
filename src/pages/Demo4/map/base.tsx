@@ -246,7 +246,7 @@ function City(props: {
         center
         position={[data.center.x, data.center.y, depth + 0.55]}
         distanceFactor={8}
-        zIndexRange={[100 - 1000]}>
+        zIndexRange={[100, 1000]}>
         {data.name}
       </Label>
     </object3D>

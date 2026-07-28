@@ -27,3 +27,8 @@ src/assets/sc_specular_map.png
 src/assets/sc_ambient_occlusion_map.png
 
 package-lock.json
+
+# 地图瓦片缓存 / 中间脚本产物
+public/geo/_tile_cache/
+scripts/_*.py
+scripts/_*.json

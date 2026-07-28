@@ -1,4 +1,4 @@
-import { useLayoutEffect, type ComponentProps } from "react";
+import { useId, useLayoutEffect, type ComponentProps } from "react";
 import styled from "styled-components";
 import autofit from "autofit.js";
 
@@ -15,15 +15,16 @@ const Wrapper = styled.div`
 export type AutoFitProps = Omit<ComponentProps<typeof Wrapper>, "id">;
 
 export default function AutoFit(props: AutoFitProps) {
-  const id = `autofit_${Date.now().toString(36)}`;
+  const reactId = useId().replace(/:/g, "");
+  const id = `autofit_${reactId}`;
 
   useLayoutEffect(() => {
-    autofit.init({ el: `#${id}` });
+    autofit.init({ el: `#${id}` }, false);
 
     return () => {
-      autofit.off();
+      autofit.off(`#${id}`);
     };
-  }, []);
+  }, [id]);
 
   return <Wrapper id={id} {...props} />;
 }

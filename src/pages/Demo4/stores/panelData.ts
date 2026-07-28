@@ -44,36 +44,39 @@ export const usePanelDataStore = create<PanelDataStore>((set, get) => ({
     if (get().loading || get().loaded) return;
     set({ loading: true });
     try {
-      const [companyRes, parkRes, chainRes, typeRes, aboveRes] =
-        await Promise.all([
-          fetchCompanies(1, 1000),
-          fetchParkList(),
-          fetchParkChain(),
-          fetchCompanyTypeInfo(),
-          fetchAboveScale(),
-        ]);
+      const results = await Promise.allSettled([
+        fetchCompanies(1, 1000),
+        fetchParkList(),
+        fetchParkChain(),
+        fetchCompanyTypeInfo(),
+        fetchAboveScale(),
+      ]);
+
+      const [companyRes, parkRes, chainRes, typeRes, aboveRes] = results.map(
+        (r) => (r.status === "fulfilled" ? r.value : null)
+      );
 
       const list =
-        companyRes.code === 0 && Array.isArray(companyRes.data?.list)
+        companyRes?.code === 0 && Array.isArray(companyRes.data?.list)
           ? companyRes.data.list.map(normalizeCompany)
           : [];
 
       set({
         companies: list,
         parks:
-          parkRes.code === 0 && Array.isArray(parkRes.data) ? parkRes.data : [],
+          parkRes?.code === 0 && Array.isArray(parkRes.data) ? parkRes.data : [],
         parkChain:
-          chainRes.code === 0 ? normalizeCompanyStatList(chainRes.data) : [],
+          chainRes?.code === 0 ? normalizeCompanyStatList(chainRes.data) : [],
         typeInfo:
-          typeRes.code === 0 ? normalizeTypeInfoList(typeRes.data) : [],
+          typeRes?.code === 0 ? normalizeTypeInfoList(typeRes.data) : [],
         aboveScale:
-          aboveRes.code === 0 && Array.isArray(aboveRes.data)
+          aboveRes?.code === 0 && Array.isArray(aboveRes.data)
             ? aboveRes.data
             : [],
         loaded: true,
       });
     } catch (error) {
-      console.error("[Demo4] panel data load failed", error);
+      console.warn("[Demo4] panel data load failed", error);
       set({ loaded: true });
     } finally {
       set({ loading: false });
