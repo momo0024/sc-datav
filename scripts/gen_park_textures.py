@@ -1,4 +1,4 @@
-"""根据 park_areas_gcj02 范围拉取高德卫星瓦片，生成贴图 / 法线 / 位移图。"""
+"""根据 park_areas.json 范围拉取高德卫星瓦片，生成贴图 / 法线 / 位移图。"""
 from __future__ import annotations
 
 import json
@@ -13,7 +13,7 @@ import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
-GEO_JSON = ROOT / "public/geo/park_areas_gcj02.json"
+GEO_JSON = ROOT / "src/assets/park_areas.json"
 CACHE_DIR = ROOT / "public/geo/_tile_cache"
 OUT_MAP = ROOT / "src/assets/park_map.png"
 OUT_NORMAL = ROOT / "src/assets/park_normal_map.png"
