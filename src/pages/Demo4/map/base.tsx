@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Center, useTexture } from "@react-three/drei";
 import {
   Box2,
@@ -38,6 +38,7 @@ export default function Base(props: BaseProps) {
   const { data, outlineData, depth = 1 } = props;
   const groupRef = useRef<Group>(null!);
   const camera = useThree((state) => state.camera);
+  const [hoveredName, setHoveredName] = useState<string | null>(null);
 
   const projection = useMemo(() => {
     const center =
@@ -158,6 +159,8 @@ export default function Base(props: BaseProps) {
               depth={depth}
               bbox={bbox}
               data={region}
+              hoveredName={hoveredName}
+              setHoveredName={setHoveredName}
             />
           ))}
           {outlineData && (
@@ -183,11 +186,12 @@ function City(props: {
     center: Vector3;
     points: Vector2[][];
   };
+  hoveredName: string | null;
+  setHoveredName: (name: string | null) => void;
 }) {
-  const { bbox, data, depth } = props;
+  const { bbox, data, depth, hoveredName, setHoveredName } = props;
   const materialRef = useRef<ShaderMaterial>(null!);
   const groupRef = useRef<Group>(null!);
-  const vector3 = useRef(new Vector3(1, 1, 1));
 
   const [diffuseMap, normalMap] = useTexture([parkMap, parkNormalMap]);
 
@@ -198,7 +202,8 @@ function City(props: {
   }, [data.points]);
 
   useFrame((_, delta) => {
-    groupRef.current.scale.lerp(vector3.current, 0.1);
+    const target = hoveredName === data.name ? 1.5 : 1;
+    groupRef.current.scale.z += (target - groupRef.current.scale.z) * 0.1;
     materialRef.current.uniforms.time.value += delta / 3;
   });
 
@@ -207,11 +212,11 @@ function City(props: {
       ref={groupRef}
       onPointerOver={(e) => {
         e.stopPropagation();
-        vector3.current.setZ(1.5);
+        setHoveredName(data.name);
         document.body.style.cursor = "pointer";
       }}
       onPointerOut={() => {
-        vector3.current.setZ(1);
+        setHoveredName(null);
         document.body.style.cursor = "auto";
       }}>
       <ShapeBox bbox={bbox} args={[shape, { depth, bevelEnabled: false }]}>
